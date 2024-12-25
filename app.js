@@ -16,7 +16,6 @@ import ReactDOM from 'react-dom/client'
  *      <h2>I am H2 tag</h2>
  *      </div>
  * </div>
- */
 
 const parent = React.createElement(
     'div',
@@ -31,6 +30,41 @@ const parent = React.createElement(
 )
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(parent);
+*///
 
-//JSX
+//JSX - HTML like syntax  (It is not HTML) - JavaScript XML
+//Parcel takes help from bebel to transpile the code from JSX to brower understandable language
+//JSX => Babel transpiles to React.createElement => in trun convetred to into JS Object and to DOM Object/ 
+// const jsxHeading = (<h1 className='heading1' tabIndex='1'> Namste JS from Teja!! </h1>)
 
+
+/** 
+ * React Components
+ * Types of Components
+ * 1) Class Based Component - old way
+ * 2) Functional Component - new way
+ * */
+
+//React functional component
+// A JS function that returns a React element
+const Title = () => {
+    return (
+        <h2 className='head' tabIndex = '5'>Namste JS from Title</h2>
+    );
+}
+const Title2 = (
+    <h2 className='head'>Namste JS from Title 2</h2>
+)
+
+const HeadingComponent = () => (
+    <div id='container'>
+        <Title /> {/*component composition - rendering component inside another component*/}
+        {Title2} {/*rendering react element*/}
+        {Title} {/*rendering component using js functions*/}
+        <h1 className='heading'>Namste JS from Teja</h1>
+    </div>
+);
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(HeadingComponent());
+root.render(<HeadingComponent />);
