@@ -87,3 +87,8 @@
     gap: 1rem;
     background-color: #f8fafc;
 }
+
+.top-rated{
+    cursor: default;
+    padding: 2px
+}
