@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { apiData } from "../resturant_db/res";
 
 export const TopRated = ({ filterTopRated }) => {
   return (
