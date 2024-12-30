@@ -4,11 +4,12 @@ import { TopRated } from './TopRated';
 import { Shimmer } from './Shimmer';
 import { useState, useEffect } from 'react';
 import { swiggy_api } from '../utils/constant';
-import { filterRestaurantsByRating } from '../utils/utilFunctions';
+import { filterRestaurantsByRating, searchRes } from '../utils/utilFunctions';
 import axios from 'axios';
 import _ from 'lodash';
 
 const useFetchRestaurants = (apiUrl) => {
+	const [originalData, setOriginalData] = useState([]);
 	const [data, setData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -19,6 +20,7 @@ const useFetchRestaurants = (apiUrl) => {
 				const resPath =
 					'data.cards[1].card.card.gridElements.infoWithStyle.restaurants';
 				const restaurants = _.get(response.data, resPath, []);
+				setOriginalData(restaurants);
 				setData(restaurants);
 			} catch (error) {
 				console.error('Error fetching restaurants:', error);
@@ -29,7 +31,7 @@ const useFetchRestaurants = (apiUrl) => {
 		fetchData();
 	}, [apiUrl]);
 
-	return { data, isLoading, setData };
+	return { data, isLoading, setData, originalData };
 };
 
 export const Body = () => {
@@ -37,17 +39,31 @@ export const Body = () => {
 		data: restaurants,
 		isLoading,
 		setData: setRestaurants,
+		originalData,
 	} = useFetchRestaurants(swiggy_api);
+	const [searchText, setSearchText] = useState('');
 
-	const handleTopRated = () => {
-		const topRated = filterRestaurantsByRating(restaurants, 4.3);
-		setRestaurants(topRated);
+	const handleSearch = (text) => {
+		setSearchText(text);
+
+		if (text.trim() === '') {
+			setRestaurants(originalData);
+		} else {
+			const filteredRestaurants = searchRes(originalData, text);
+			setRestaurants(filteredRestaurants);
+		}
 	};
 
 	return (
 		<div className="body">
-			<TopRated filterTopRated={handleTopRated} />
-			<SearchBar />
+			<div className="body-ribbon">
+				<TopRated
+					filterTopRated={() =>
+						setRestaurants(filterRestaurantsByRating(originalData, 4.0))
+					}
+				/>
+				<SearchBar searchText={searchText} onSearchChange={handleSearch} />
+			</div>
 			{isLoading ? <Shimmer /> : <RestaurantList restaurants={restaurants} />}
 		</div>
 	);

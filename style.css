@@ -80,20 +80,6 @@
     color: #1f2937;
 }
 
-/* Search Section */
-.search {
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    background-color: #f8fafc;
-}
-
-.top-rated{
-    cursor: default;
-    padding: 2px
-}
-
 /* Shimmer Effect Styles */
 .shimmer-container {
     display: flex;
@@ -138,4 +124,64 @@
 
 .log-btn:hover {
     background-color: #d45a11; /* Optional: Change color on hover */
+}
+
+/* Search and Top Rated Section */
+.search-top-rated {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    background-color: #f8fafc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #f97316;
+}
+
+.top-rated-container {
+    display: flex;
+    align-items: center;
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: #388e3c;
+}
+
+.body-ribbon {
+    padding: 5px 10px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
 }
