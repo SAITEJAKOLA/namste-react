@@ -8,20 +8,32 @@ import { filterRestaurantsByRating, searchRes } from '../utils/utilFunctions';
 import axios from 'axios';
 import _ from 'lodash';
 
-const useFetchRestaurants = (apiUrl) => {
+export const Body = () => {
+	/**
+	 * local state variables- super powerfull react varibales
+	 * Never use state variables outside the component
+	 * Never use state variables inside conditions/loops/functions
+	 * */
 	const [originalData, setOriginalData] = useState([]);
-	const [data, setData] = useState([]);
+	const [restaurants, setRestaurants] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [searchText, setSearchText] = useState('');
+
+	/**
+	 * If no dependency array is provided, the effect will run on every render.
+	 * if dependency array is empty, the effect will run only once on initial render.
+	 * if dependency array is provided, the effect will run on initial render and on every render if any of the dependencies change.
+	 */
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await axios.get(apiUrl);
+				const response = await axios.get(swiggy_api);
 				const resPath =
 					'data.cards[1].card.card.gridElements.infoWithStyle.restaurants';
-				const restaurants = _.get(response.data, resPath, []);
-				setOriginalData(restaurants);
-				setData(restaurants);
+				const restaurantData = _.get(response.data, resPath, []);
+				setOriginalData(restaurantData);
+				setRestaurants(restaurantData);
 			} catch (error) {
 				console.error('Error fetching restaurants:', error);
 			} finally {
@@ -29,23 +41,10 @@ const useFetchRestaurants = (apiUrl) => {
 			}
 		};
 		fetchData();
-	}, [apiUrl]);
-
-	return { data, isLoading, setData, originalData };
-};
-
-export const Body = () => {
-	const {
-		data: restaurants,
-		isLoading,
-		setData: setRestaurants,
-		originalData,
-	} = useFetchRestaurants(swiggy_api);
-	const [searchText, setSearchText] = useState('');
+	}, []);
 
 	const handleSearch = (text) => {
 		setSearchText(text);
-
 		if (text.trim() === '') {
 			setRestaurants(originalData);
 		} else {
