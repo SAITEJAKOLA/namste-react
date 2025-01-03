@@ -14,7 +14,7 @@ export const Header = () => {
 
 	const setLoginF = () => {
 		setIsLogin((prevState) => !prevState);
-	};
+	}; 
 
 	return (
 		<div className="header">
