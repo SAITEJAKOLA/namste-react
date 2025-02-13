@@ -25,12 +25,13 @@ export const ResturantMenu = () => {
 	};
 
 	if (!restInfo) return <Shimmer />;
+	console.log('Resturant info from swiggy menu api', restInfo);
 	const { name, cuisines, costForTwoMessage } =
 		restInfo.cards[2].card.card.info;
 	const itemCards =
-		restInfo.cards[4].groupedCard.cardGroupMap.REGULAR.cards[2].card.card
+		restInfo.cards[4].groupedCard.cardGroupMap.REGULAR.cards[1].card.card
 			.itemCards;
-	console.log(itemCards);
+	console.log('ItemCards from res response', itemCards);
 
 	return (
 		<div>
